@@ -1,0 +1,19 @@
+{
+  "name": "EDEKA Stunden & Überstunden",
+  "short_name": "Stunden",
+  "description": "Minimalistischer Stunden-, Verdienst- und Überstunden-Tracker",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#000000",
+  "theme_color": "#000000",
+  "lang": "de-DE",
+  "icons": [
+    {
+      "src": "./icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

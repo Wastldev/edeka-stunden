@@ -1,0 +1,2316 @@
+<!DOCTYPE html>
+<html lang="de" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Stunden" />
+  <meta name="theme-color" content="#000000" id="metaThemeColor" />
+  <link rel="manifest" href="manifest.json" />
+  <link rel="icon" type="image/svg+xml" href="icon.svg" />
+  <link rel="apple-touch-icon" href="icon.svg" />
+  <title>Stunden & Überstunden</title>
+  <style>
+    /* ==========================================================================
+       Apple iOS 18 Human Interface Design System (Dark & Light)
+       ========================================================================== */
+    :root,
+    [data-theme="dark"] {
+      --bg: #000000;
+      --card: #1c1c1e;
+      --card-elevated: #242426;
+      --fill: rgba(120, 120, 128, 0.24);
+      --fill-secondary: rgba(120, 120, 128, 0.16);
+      --fill-active: #3a3a3c;
+      --segment-active: #636366;
+      --nav-glass: rgba(18, 18, 20, 0.76);
+      --separator: rgba(84, 84, 88, 0.48);
+      --card-border: rgba(255, 255, 255, 0.08);
+      --text: #ffffff;
+      --text-secondary: #8e8e93;
+      --text-tertiary: #636366;
+      --blue: #0a84ff;
+      --blue-soft: rgba(10, 132, 255, 0.16);
+      --green: #30d158;
+      --green-soft: rgba(48, 209, 88, 0.16);
+      --yellow: #ffd60a;
+      --yellow-soft: rgba(255, 214, 10, 0.16);
+      --orange: #ff9f0a;
+      --orange-soft: rgba(255, 159, 10, 0.16);
+      --red: #ff453a;
+      --red-soft: rgba(255, 69, 58, 0.16);
+      --hero-grad: radial-gradient(110% 130% at 100% 0%, rgba(255, 214, 10, 0.18) 0%, rgba(10, 132, 255, 0.08) 45%, #1c1c1e 85%);
+      --hero-border: rgba(255, 214, 10, 0.28);
+      --shadow-card: 0 2px 12px rgba(0, 0, 0, 0.25);
+      --shadow-segment: 0 3px 8px rgba(0, 0, 0, 0.32), 0 1px 2px rgba(0, 0, 0, 0.2);
+      --color-scheme: dark;
+    }
+
+    [data-theme="light"] {
+      --bg: #f2f2f7;
+      --card: #ffffff;
+      --card-elevated: #f9f9fb;
+      --fill: rgba(118, 118, 128, 0.12);
+      --fill-secondary: rgba(118, 118, 128, 0.08);
+      --fill-active: rgba(118, 118, 128, 0.2);
+      --segment-active: #ffffff;
+      --nav-glass: rgba(242, 242, 247, 0.82);
+      --separator: rgba(60, 60, 67, 0.18);
+      --card-border: rgba(0, 0, 0, 0.04);
+      --text: #000000;
+      --text-secondary: #6e6e73;
+      --text-tertiary: #aeaeb2;
+      --blue: #007aff;
+      --blue-soft: rgba(0, 122, 255, 0.11);
+      --green: #34c759;
+      --green-soft: rgba(52, 199, 89, 0.13);
+      --yellow: #c88a00;
+      --yellow-soft: rgba(255, 204, 0, 0.18);
+      --orange: #ff9500;
+      --orange-soft: rgba(255, 149, 0, 0.14);
+      --red: #ff3b30;
+      --red-soft: rgba(255, 59, 48, 0.12);
+      --hero-grad: radial-gradient(110% 130% at 100% 0%, rgba(255, 204, 0, 0.22) 0%, rgba(0, 122, 255, 0.06) 45%, #ffffff 85%);
+      --hero-border: rgba(200, 138, 0, 0.25);
+      --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.04), 0 4px 12px rgba(0, 0, 0, 0.03);
+      --shadow-segment: 0 3px 8px rgba(0, 0, 0, 0.12), 0 3px 1px rgba(0, 0, 0, 0.04);
+      --color-scheme: light;
+    }
+
+    /* 6 Gedämpfte / Dunklere Pastell-Themes (Kein grelles Weiß) */
+    [data-theme="pastel-blue"] {
+      --bg: #a7bed4;
+      --card: #bdd0e3;
+      --card-elevated: #c9d9ea;
+      --fill: rgba(16, 42, 74, 0.14);
+      --fill-secondary: rgba(16, 42, 74, 0.09);
+      --fill-active: rgba(16, 42, 74, 0.22);
+      --segment-active: #d4e2f0;
+      --nav-glass: rgba(167, 190, 212, 0.86);
+      --separator: rgba(16, 42, 74, 0.16);
+      --card-border: rgba(255, 255, 255, 0.28);
+      --text: #0f2136;
+      --text-secondary: #35506e;
+      --text-tertiary: #5c7896;
+      --blue: #1a5fb4;
+      --blue-soft: rgba(26, 95, 180, 0.16);
+      --green: #147a42;
+      --green-soft: rgba(20, 122, 66, 0.16);
+      --yellow: #8f5f00;
+      --yellow-soft: rgba(184, 125, 0, 0.2);
+      --orange: #b05c00;
+      --orange-soft: rgba(176, 92, 0, 0.17);
+      --red: #c92a2a;
+      --red-soft: rgba(201, 42, 42, 0.15);
+      --hero-grad: linear-gradient(135deg, #91afc9 0%, #bdd0e3 85%);
+      --hero-border: rgba(26, 95, 180, 0.28);
+      --shadow-card: 0 4px 16px rgba(15, 33, 54, 0.08);
+      --shadow-segment: 0 2px 6px rgba(15, 33, 54, 0.12);
+      --color-scheme: light;
+    }
+
+    [data-theme="pastel-pink"] {
+      --bg: #cba7b7;
+      --card: #dbbcca;
+      --card-elevated: #e3c8d4;
+      --fill: rgba(66, 20, 42, 0.14);
+      --fill-secondary: rgba(66, 20, 42, 0.09);
+      --fill-active: rgba(66, 20, 42, 0.22);
+      --segment-active: #ecd4df;
+      --nav-glass: rgba(203, 167, 183, 0.86);
+      --separator: rgba(66, 20, 42, 0.16);
+      --card-border: rgba(255, 255, 255, 0.28);
+      --text: #2e101e;
+      --text-secondary: #63384c;
+      --text-tertiary: #8c5e73;
+      --blue: #ad3466;
+      --blue-soft: rgba(173, 52, 102, 0.16);
+      --green: #147a42;
+      --green-soft: rgba(20, 122, 66, 0.16);
+      --yellow: #8f5f00;
+      --yellow-soft: rgba(184, 125, 0, 0.2);
+      --orange: #b05c00;
+      --orange-soft: rgba(176, 92, 0, 0.17);
+      --red: #c92a2a;
+      --red-soft: rgba(201, 42, 42, 0.15);
+      --hero-grad: linear-gradient(135deg, #bc91a4 0%, #dbbcca 85%);
+      --hero-border: rgba(173, 52, 102, 0.28);
+      --shadow-card: 0 4px 16px rgba(46, 16, 30, 0.08);
+      --shadow-segment: 0 2px 6px rgba(46, 16, 30, 0.12);
+      --color-scheme: light;
+    }
+
+    [data-theme="pastel-green"] {
+      --bg: #a3c1b0;
+      --card: #b9d2c4;
+      --card-elevated: #c6dcd0;
+      --fill: rgba(16, 56, 35, 0.14);
+      --fill-secondary: rgba(16, 56, 35, 0.09);
+      --fill-active: rgba(16, 56, 35, 0.22);
+      --segment-active: #d2e6db;
+      --nav-glass: rgba(163, 193, 176, 0.86);
+      --separator: rgba(16, 56, 35, 0.16);
+      --card-border: rgba(255, 255, 255, 0.28);
+      --text: #0e291b;
+      --text-secondary: #345c47;
+      --text-tertiary: #5a826c;
+      --blue: #187a46;
+      --blue-soft: rgba(24, 122, 70, 0.16);
+      --green: #147541;
+      --green-soft: rgba(20, 117, 65, 0.16);
+      --yellow: #8f5f00;
+      --yellow-soft: rgba(184, 125, 0, 0.2);
+      --orange: #b05c00;
+      --orange-soft: rgba(176, 92, 0, 0.17);
+      --red: #c92a2a;
+      --red-soft: rgba(201, 42, 42, 0.15);
+      --hero-grad: linear-gradient(135deg, #8db09c 0%, #b9d2c4 85%);
+      --hero-border: rgba(24, 122, 70, 0.28);
+      --shadow-card: 0 4px 16px rgba(14, 41, 27, 0.08);
+      --shadow-segment: 0 2px 6px rgba(14, 41, 27, 0.12);
+      --color-scheme: light;
+    }
+
+    [data-theme="pastel-lavender"] {
+      --bg: #b1a8cf;
+      --card: #c5bee0;
+      --card-elevated: #d1cbe8;
+      --fill: rgba(38, 24, 78, 0.14);
+      --fill-secondary: rgba(38, 24, 78, 0.09);
+      --fill-active: rgba(38, 24, 78, 0.22);
+      --segment-active: #dcd7f0;
+      --nav-glass: rgba(177, 168, 207, 0.86);
+      --separator: rgba(38, 24, 78, 0.16);
+      --card-border: rgba(255, 255, 255, 0.28);
+      --text: #1c1236;
+      --text-secondary: #4a3c70;
+      --text-tertiary: #716396;
+      --blue: #5839b8;
+      --blue-soft: rgba(88, 57, 184, 0.16);
+      --green: #147a42;
+      --green-soft: rgba(20, 122, 66, 0.16);
+      --yellow: #8f5f00;
+      --yellow-soft: rgba(184, 125, 0, 0.2);
+      --orange: #b05c00;
+      --orange-soft: rgba(176, 92, 0, 0.17);
+      --red: #c92a2a;
+      --red-soft: rgba(201, 42, 42, 0.15);
+      --hero-grad: linear-gradient(135deg, #9d92c2 0%, #c5bee0 85%);
+      --hero-border: rgba(88, 57, 184, 0.28);
+      --shadow-card: 0 4px 16px rgba(28, 18, 54, 0.08);
+      --shadow-segment: 0 2px 6px rgba(28, 18, 54, 0.12);
+      --color-scheme: light;
+    }
+
+    [data-theme="pastel-peach"] {
+      --bg: #cfaea0;
+      --card: #dec3b6;
+      --card-elevated: #e6cfc4;
+      --fill: rgba(71, 32, 14, 0.14);
+      --fill-secondary: rgba(71, 32, 14, 0.09);
+      --fill-active: rgba(71, 32, 14, 0.22);
+      --segment-active: #eedbd2;
+      --nav-glass: rgba(207, 174, 160, 0.86);
+      --separator: rgba(71, 32, 14, 0.16);
+      --card-border: rgba(255, 255, 255, 0.28);
+      --text: #2e150a;
+      --text-secondary: #66402f;
+      --text-tertiary: #8f6756;
+      --blue: #b5491c;
+      --blue-soft: rgba(181, 73, 28, 0.16);
+      --green: #147a42;
+      --green-soft: rgba(20, 122, 66, 0.16);
+      --yellow: #8f5f00;
+      --yellow-soft: rgba(184, 125, 0, 0.2);
+      --orange: #b05c00;
+      --orange-soft: rgba(176, 92, 0, 0.17);
+      --red: #c92a2a;
+      --red-soft: rgba(201, 42, 42, 0.15);
+      --hero-grad: linear-gradient(135deg, #bf9988 0%, #dec3b6 85%);
+      --hero-border: rgba(181, 73, 28, 0.28);
+      --shadow-card: 0 4px 16px rgba(46, 21, 10, 0.08);
+      --shadow-segment: 0 2px 6px rgba(46, 21, 10, 0.12);
+      --color-scheme: light;
+    }
+
+    [data-theme="pastel-yellow"] {
+      --bg: #c9bc93;
+      --card: #d9ceab;
+      --card-elevated: #e2d8b9;
+      --fill: rgba(66, 50, 8, 0.14);
+      --fill-secondary: rgba(66, 50, 8, 0.09);
+      --fill-active: rgba(66, 50, 8, 0.22);
+      --segment-active: #ebe3c8;
+      --nav-glass: rgba(201, 188, 147, 0.86);
+      --separator: rgba(66, 50, 8, 0.16);
+      --card-border: rgba(255, 255, 255, 0.28);
+      --text: #2b2005;
+      --text-secondary: #5e4c1e;
+      --text-tertiary: #877341;
+      --blue: #996800;
+      --blue-soft: rgba(153, 104, 0, 0.16);
+      --green: #147a42;
+      --green-soft: rgba(20, 122, 66, 0.16);
+      --yellow: #875b00;
+      --yellow-soft: rgba(168, 114, 0, 0.2);
+      --orange: #a85800;
+      --orange-soft: rgba(168, 88, 0, 0.17);
+      --red: #c92a2a;
+      --red-soft: rgba(201, 42, 42, 0.15);
+      --hero-grad: linear-gradient(135deg, #baa978 0%, #d9ceab 85%);
+      --hero-border: rgba(153, 104, 0, 0.28);
+      --shadow-card: 0 4px 16px rgba(43, 32, 5, 0.08);
+      --shadow-segment: 0 2px 6px rgba(43, 32, 5, 0.12);
+      --color-scheme: light;
+    }
+
+    .theme-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+
+    .theme-swatch-btn {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 12px;
+      border-radius: 14px;
+      background: var(--fill-secondary);
+      border: 1.5px solid transparent;
+      color: var(--text);
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.16s ease;
+      text-align: left;
+    }
+
+    .theme-swatch-btn:active {
+      transform: scale(0.96);
+    }
+
+    .theme-swatch-btn.active {
+      border-color: var(--blue);
+      background: var(--blue-soft);
+    }
+
+    .swatch-dot {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      border: 1px solid rgba(0, 0, 0, 0.12);
+      box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.6);
+    }
+
+    @media (max-width: 480px) {
+      .theme-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Helvetica, Arial, sans-serif;
+      -webkit-tap-highlight-color: transparent;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      padding-bottom: calc(48px + env(safe-area-inset-bottom, 20px));
+      transition: background-color 0.25s ease, color 0.25s ease;
+      overflow-x: hidden;
+    }
+
+    /* ==========================================================================
+       iOS Translucent Navigation Bar (Safe-Area & Dynamic Island Ready)
+       ========================================================================== */
+    .app-header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--nav-glass);
+      backdrop-filter: saturate(180%) blur(24px);
+      -webkit-backdrop-filter: saturate(180%) blur(24px);
+      border-bottom: 0.5px solid var(--separator);
+      padding-top: max(12px, calc(env(safe-area-inset-top, 0px) + 8px));
+      padding-bottom: 12px;
+      padding-left: max(16px, env(safe-area-inset-left, 16px));
+      padding-right: max(16px, env(safe-area-inset-right, 16px));
+    }
+
+    @media (display-mode: standalone) and (max-width: 600px) {
+      .app-header {
+        padding-top: max(52px, calc(env(safe-area-inset-top, 44px) + 8px));
+      }
+    }
+
+    .header-inner {
+      max-width: 720px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      min-width: 0;
+    }
+
+    .edeka-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: linear-gradient(155deg, #0058ab 0%, #003a75 100%);
+      color: #ffd60a;
+      font-weight: 800;
+      font-size: 19px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25), 0 2px 6px rgba(0, 0, 0, 0.25);
+    }
+
+    .brand-text {
+      min-width: 0;
+    }
+
+    .brand-text h1 {
+      font-size: 17px;
+      font-weight: 600;
+      letter-spacing: -0.41px;
+      color: var(--text);
+      line-height: 1.15;
+    }
+
+    .brand-text p {
+      font-size: 12px;
+      color: var(--text-secondary);
+      font-weight: 400;
+      letter-spacing: -0.08px;
+      margin-top: 1px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-shrink: 0;
+    }
+
+    .ios-pill-btn {
+      height: 34px;
+      padding: 0 11px;
+      border-radius: 999px;
+      background: var(--fill-secondary);
+      border: none;
+      color: var(--text);
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: -0.15px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      cursor: pointer;
+      user-select: none;
+      transition: background 0.15s ease, transform 0.12s ease;
+    }
+
+    .ios-pill-btn.circle {
+      width: 34px;
+      padding: 0;
+    }
+
+    .ios-pill-btn:active {
+      transform: scale(0.93);
+      background: var(--fill-active);
+    }
+
+    .sync-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 6px var(--green);
+      transition: background 0.2s ease;
+    }
+
+    .sync-dot.syncing {
+      background: var(--orange);
+      box-shadow: 0 0 6px var(--orange);
+    }
+
+    .sync-dot.offline {
+      background: var(--text-tertiary);
+      box-shadow: none;
+    }
+
+    /* ==========================================================================
+       Main Container (Single-Column Apple Health / Wallet Feed)
+       ========================================================================== */
+    .container {
+      max-width: 720px;
+      margin: 16px auto 0;
+      padding: 0 max(16px, env(safe-area-inset-left, 16px)) 0 max(16px, env(safe-area-inset-right, 16px));
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    /* ==========================================================================
+       Apple Wallet / Health Summary Bento
+       ========================================================================== */
+    .summary-bento {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .wallet-hero {
+      grid-column: 1 / -1;
+      background: var(--hero-grad);
+      border: 0.5px solid var(--hero-border);
+      border-radius: 22px;
+      padding: 20px;
+      box-shadow: var(--shadow-card);
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .wallet-hero-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .wallet-eyebrow {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-secondary);
+      letter-spacing: -0.1px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .wallet-balance {
+      font-size: 38px;
+      font-weight: 700;
+      letter-spacing: -1.2px;
+      color: var(--text);
+      line-height: 1.05;
+      margin-top: 4px;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .wallet-hero-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 12px;
+      border-top: 0.5px solid var(--separator);
+      font-size: 12.5px;
+      color: var(--text-secondary);
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .metric-card {
+      background: var(--card);
+      border: 0.5px solid var(--card-border);
+      border-radius: 20px;
+      padding: 16px;
+      box-shadow: var(--shadow-card);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .metric-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 6px;
+    }
+
+    .metric-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-secondary);
+      letter-spacing: -0.15px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .metric-value {
+      font-size: 25px;
+      font-weight: 700;
+      letter-spacing: -0.7px;
+      color: var(--text);
+      line-height: 1.1;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .metric-sub {
+      font-size: 11.5px;
+      color: var(--text-secondary);
+      line-height: 1.3;
+      font-variant-numeric: tabular-nums;
+    }
+
+    /* Progress Bar inside Month Card */
+    .ios-progress {
+      width: 100%;
+      height: 6px;
+      background: var(--fill);
+      border-radius: 999px;
+      overflow: hidden;
+      margin: 2px 0;
+    }
+
+    .ios-progress-fill {
+      height: 100%;
+      background: var(--green);
+      border-radius: 999px;
+      transition: width 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .ios-progress-fill.over {
+      background: var(--orange);
+    }
+
+    /* ==========================================================================
+       Clean Apple Badges
+       ========================================================================== */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: -0.15px;
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+    }
+
+    .badge.yellow {
+      background: var(--yellow-soft);
+      color: var(--yellow);
+    }
+
+    .badge.green {
+      background: var(--green-soft);
+      color: var(--green);
+    }
+
+    .badge.orange {
+      background: var(--orange-soft);
+      color: var(--orange);
+    }
+
+    .badge.blue {
+      background: var(--blue-soft);
+      color: var(--blue);
+    }
+
+    /* ==========================================================================
+       Horizontal Month Switcher (Touch Snap)
+       ========================================================================== */
+    .month-strip-wrap {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .month-tabs {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scroll-snap-type: x proximity;
+      scrollbar-width: none;
+      flex: 1;
+      padding: 2px 0;
+    }
+
+    .month-tabs::-webkit-scrollbar {
+      display: none;
+    }
+
+    .month-tab {
+      scroll-snap-align: start;
+      background: var(--card);
+      border: 0.5px solid var(--card-border);
+      color: var(--text);
+      padding: 10px 14px;
+      border-radius: 16px;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.18s ease;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 2px;
+      box-shadow: var(--shadow-card);
+      flex-shrink: 0;
+    }
+
+    .month-tab:active {
+      transform: scale(0.96);
+    }
+
+    .month-tab-top {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: -0.25px;
+    }
+
+    .status-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--orange);
+    }
+
+    .status-dot.settled {
+      background: var(--green);
+    }
+
+    .month-tab .sub {
+      font-size: 11.5px;
+      font-weight: 500;
+      color: var(--text-secondary);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .month-tab.active {
+      background: var(--blue);
+      border-color: var(--blue);
+      color: #ffffff;
+    }
+
+    .month-tab.active .sub {
+      color: rgba(255, 255, 255, 0.82);
+    }
+
+    .month-tab.active .status-dot {
+      background: #ffffff;
+    }
+
+    .btn-add-month {
+      height: 52px;
+      padding: 0 14px;
+      border-radius: 16px;
+      background: var(--card);
+      border: 0.5px solid var(--card-border);
+      color: var(--blue);
+      font-size: 13.5px;
+      font-weight: 600;
+      cursor: pointer;
+      flex-shrink: 0;
+      box-shadow: var(--shadow-card);
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      transition: transform 0.12s ease;
+    }
+
+    .btn-add-month:active {
+      transform: scale(0.95);
+    }
+
+    /* ==========================================================================
+       iOS Grouped Section Cards
+       ========================================================================== */
+    .ios-section {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .ios-section-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 6px;
+    }
+
+    .ios-section-title {
+      font-size: 13px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+      color: var(--text-secondary);
+    }
+
+    .ios-section-meta {
+      font-size: 12.5px;
+      color: var(--text-secondary);
+      font-weight: 500;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .ios-card {
+      background: var(--card);
+      border: 0.5px solid var(--card-border);
+      border-radius: 20px;
+      padding: 18px;
+      box-shadow: var(--shadow-card);
+    }
+
+    .ios-card.inset-list {
+      padding: 0;
+      overflow: hidden;
+    }
+
+    /* ==========================================================================
+       iOS Segmented Control
+       ========================================================================== */
+    .segmented-control {
+      display: flex;
+      background: var(--fill);
+      border-radius: 10px;
+      padding: 2px;
+      margin-bottom: 16px;
+    }
+
+    .seg-btn {
+      flex: 1;
+      background: transparent;
+      border: none;
+      color: var(--text);
+      padding: 7px 12px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: -0.1px;
+      cursor: pointer;
+      transition: all 0.16s ease;
+      opacity: 0.75;
+    }
+
+    .seg-btn.active {
+      background: var(--segment-active);
+      opacity: 1;
+      font-weight: 600;
+      box-shadow: var(--shadow-segment);
+    }
+
+    /* ==========================================================================
+       Apple Mobile-Friendly Forms (16px inputs prevent iOS zoom!)
+       ========================================================================== */
+    .ios-form-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .ios-form-row-2 {
+      display: grid;
+      grid-template-columns: 1.2fr 0.9fr;
+      gap: 10px;
+    }
+
+    .ios-form-row-equal {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      min-width: 0;
+    }
+
+    .field label {
+      font-size: 12px;
+      color: var(--text-secondary);
+      font-weight: 500;
+      padding-left: 2px;
+    }
+
+    .field input,
+    .field select {
+      background: var(--fill-secondary);
+      border: 1px solid transparent;
+      border-radius: 12px;
+      height: 44px;
+      padding: 0 13px;
+      color: var(--text);
+      font-size: 16px; /* Prevents iOS Safari auto-zoom on tap */
+      font-weight: 500;
+      outline: none;
+      width: 100%;
+      color-scheme: var(--color-scheme);
+      transition: border-color 0.15s ease, background 0.15s ease;
+      -webkit-appearance: none;
+      appearance: none;
+    }
+
+    .field input::placeholder {
+      color: var(--text-tertiary);
+      font-weight: 400;
+    }
+
+    .field input:focus,
+    .field select:focus {
+      border-color: var(--blue);
+      background: var(--fill);
+    }
+
+    .btn-ios-primary {
+      background: var(--blue);
+      color: #ffffff;
+      border: none;
+      border-radius: 14px;
+      height: 48px;
+      padding: 0 18px;
+      font-size: 16px;
+      font-weight: 600;
+      letter-spacing: -0.25px;
+      cursor: pointer;
+      width: 100%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: opacity 0.15s ease, transform 0.12s ease;
+    }
+
+    .btn-ios-primary:active {
+      transform: scale(0.98);
+      opacity: 0.88;
+    }
+
+    /* Quick 1-Tap Chips (Swipeable Strip on Mobile) */
+    .quick-strip {
+      margin-top: 16px;
+      padding-top: 14px;
+      border-top: 0.5px solid var(--separator);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .quick-strip-label {
+      font-size: 12px;
+      color: var(--text-secondary);
+    }
+
+    .quick-chips-scroll {
+      display: flex;
+      gap: 7px;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      padding-bottom: 2px;
+    }
+
+    .quick-chips-scroll::-webkit-scrollbar {
+      display: none;
+    }
+
+    .chip {
+      background: var(--fill-secondary);
+      border: none;
+      color: var(--text);
+      height: 34px;
+      padding: 0 13px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      white-space: nowrap;
+      flex-shrink: 0;
+      font-variant-numeric: tabular-nums;
+      transition: background 0.15s ease, transform 0.1s ease;
+    }
+
+    .chip:active {
+      transform: scale(0.94);
+      background: var(--fill-active);
+    }
+
+    /* ==========================================================================
+       iOS Inset Grouped List Rows (Entries & Months)
+       ========================================================================== */
+    .ios-list-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 13px 16px;
+      position: relative;
+      transition: background 0.12s ease;
+    }
+
+    .ios-list-row:not(:last-child)::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 68px;
+      right: 0;
+      height: 0.5px;
+      background: var(--separator);
+    }
+
+    .ios-list-row.no-icon:not(:last-child)::after {
+      left: 16px;
+    }
+
+    .ios-list-row.clickable {
+      cursor: pointer;
+    }
+
+    .ios-list-row.clickable:active {
+      background: var(--fill-secondary);
+    }
+
+    .ios-list-row.selected-month {
+      background: var(--blue-soft);
+    }
+
+    .row-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
+      flex: 1;
+    }
+
+    .ios-cal-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background: var(--fill-secondary);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      line-height: 1.05;
+    }
+
+    .ios-cal-icon .wk {
+      font-size: 9.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--red);
+      letter-spacing: 0.3px;
+    }
+
+    .ios-cal-icon .day {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text);
+      font-variant-numeric: tabular-nums;
+      margin-top: 1px;
+    }
+
+    .row-text {
+      min-width: 0;
+      flex: 1;
+    }
+
+    .row-title {
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--text);
+      letter-spacing: -0.24px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .row-subtitle {
+      font-size: 12.5px;
+      color: var(--text-secondary);
+      margin-top: 2px;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .row-right {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+
+    .row-value-group {
+      text-align: right;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .row-value-primary {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text);
+      letter-spacing: -0.2px;
+    }
+
+    .row-value-secondary {
+      font-size: 12.5px;
+      color: var(--text-secondary);
+      margin-top: 1px;
+    }
+
+    .row-actions {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .ios-row-btn {
+      width: 30px;
+      height: 30px;
+      border-radius: 999px;
+      border: none;
+      background: var(--fill-secondary);
+      color: var(--text-secondary);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: transform 0.1s ease, background 0.15s ease;
+    }
+
+    .ios-row-btn:active {
+      transform: scale(0.9);
+    }
+
+    .ios-row-btn.delete {
+      background: var(--red-soft);
+      color: var(--red);
+    }
+
+    .empty-list {
+      padding: 28px 16px;
+      text-align: center;
+      color: var(--text-secondary);
+      font-size: 14px;
+    }
+
+    /* ==========================================================================
+       Settlement Receipt Lines
+       ========================================================================== */
+    .receipt-box {
+      background: var(--fill-secondary);
+      border-radius: 14px;
+      padding: 13px 15px;
+      margin-bottom: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .receipt-line {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 13.5px;
+      color: var(--text-secondary);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .receipt-line strong {
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    .receipt-line.divider {
+      padding-top: 8px;
+      border-top: 0.5px solid var(--separator);
+    }
+
+    /* ==========================================================================
+       iOS Dynamic Island Style Toast
+       ========================================================================== */
+    .toast {
+      position: fixed;
+      bottom: max(24px, calc(env(safe-area-inset-bottom, 16px) + 12px));
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      background: rgba(28, 28, 30, 0.94);
+      backdrop-filter: saturate(180%) blur(20px);
+      -webkit-backdrop-filter: saturate(180%) blur(20px);
+      color: #ffffff;
+      border: 0.5px solid rgba(255, 255, 255, 0.16);
+      font-weight: 500;
+      padding: 11px 20px;
+      border-radius: 999px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+      transition: transform 0.32s cubic-bezier(0.22, 1, 0.36, 1);
+      z-index: 200;
+      font-size: 13.5px;
+      white-space: nowrap;
+    }
+
+    .toast.show {
+      transform: translateX(-50%) translateY(0);
+    }
+
+    @media (max-width: 420px) {
+      .wallet-balance {
+        font-size: 34px;
+      }
+      .metric-value {
+        font-size: 21px;
+      }
+      .metric-card {
+        padding: 14px;
+      }
+      .ios-card {
+        padding: 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- iOS Sticky Translucent Header -->
+  <header class="app-header">
+    <div class="header-inner">
+      <div class="brand">
+        <div class="edeka-icon">E</div>
+        <div class="brand-text">
+          <h1>Arbeitsstunden</h1>
+          <p id="headerWageText">13,90 € / Std. · Limit 585,75 €</p>
+        </div>
+      </div>
+      <div class="header-actions">
+        <button class="ios-pill-btn" onclick="pullFromCloud(true)" title="Synchronisieren">
+          <span class="sync-dot" id="syncDot"></span>
+          <span id="syncText">Sync</span>
+        </button>
+        <button class="ios-pill-btn circle" onclick="copyAppleNote()" title="Für Apple Notizen kopieren">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+        </button>
+        <button class="ios-pill-btn circle" onclick="toggleSettings()" title="Einstellungen">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <!-- Collapsible Settings Sheet with Tabs (Design & Daten) -->
+    <section id="settingsPanel" class="ios-section" style="display: none;">
+      <div class="ios-section-header">
+        <span class="ios-section-title">Einstellungen</span>
+        <span class="ios-section-meta" style="color: var(--blue); cursor: pointer;" onclick="toggleSettings()">Fertig</span>
+      </div>
+      <div class="ios-card">
+        <div class="segmented-control">
+          <button class="seg-btn active" id="tabDesignBtn" onclick="setSettingsTab('design')">Design & Farben</button>
+          <button class="seg-btn" id="tabDataBtn" onclick="setSettingsTab('data')">Lohn & Backup</button>
+        </div>
+
+        <!-- Tab 1: Pastel Background Themes -->
+        <div id="settingsTabDesign">
+          <div style="font-size: 12px; color: var(--text-secondary); font-weight: 500; margin-bottom: 10px;">
+            Pastell-Hintergrundfarbe wählen (6 Farben):
+          </div>
+          <div class="theme-grid">
+            <button class="theme-swatch-btn" data-theme-id="pastel-blue" onclick="setTheme('pastel-blue')">
+              <span class="swatch-dot" style="background: #91afc9;"></span>
+              <span>Pastell-Blau</span>
+            </button>
+            <button class="theme-swatch-btn" data-theme-id="pastel-pink" onclick="setTheme('pastel-pink')">
+              <span class="swatch-dot" style="background: #bc91a4;"></span>
+              <span>Pastell-Pink</span>
+            </button>
+            <button class="theme-swatch-btn" data-theme-id="pastel-green" onclick="setTheme('pastel-green')">
+              <span class="swatch-dot" style="background: #8db09c;"></span>
+              <span>Pastell-Grün</span>
+            </button>
+            <button class="theme-swatch-btn" data-theme-id="pastel-lavender" onclick="setTheme('pastel-lavender')">
+              <span class="swatch-dot" style="background: #9d92c2;"></span>
+              <span>Pastell-Lila</span>
+            </button>
+            <button class="theme-swatch-btn" data-theme-id="pastel-peach" onclick="setTheme('pastel-peach')">
+              <span class="swatch-dot" style="background: #bf9988;"></span>
+              <span>Pastell-Pfirsich</span>
+            </button>
+            <button class="theme-swatch-btn" data-theme-id="pastel-yellow" onclick="setTheme('pastel-yellow')">
+              <span class="swatch-dot" style="background: #baa978;"></span>
+              <span>Pastell-Gelb</span>
+            </button>
+          </div>
+
+          <div style="font-size: 12px; color: var(--text-secondary); font-weight: 500; margin: 14px 0 8px;">
+            Klassisch (Apple Standard):
+          </div>
+          <div class="ios-form-row-equal">
+            <button class="theme-swatch-btn" data-theme-id="light" onclick="setTheme('light')">
+              <span class="swatch-dot" style="background: #f2f2f7;"></span>
+              <span>iOS Hell</span>
+            </button>
+            <button class="theme-swatch-btn" data-theme-id="dark" onclick="setTheme('dark')">
+              <span class="swatch-dot" style="background: #1c1c1e; border-color: rgba(255,255,255,0.25);"></span>
+              <span>iOS Dunkel</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Tab 2: Wage, Limit & Backup -->
+        <div id="settingsTabData" style="display: none;">
+          <div class="ios-form-row-equal">
+            <div class="field">
+              <label>Stundenlohn (€ / Std.)</label>
+              <input type="number" step="0.01" id="inputHourlyWage" value="13.90" onchange="saveSettings()" />
+            </div>
+            <div class="field">
+              <label>Monatliches Limit (€)</label>
+              <input type="number" step="0.01" id="inputPayoutCap" value="585.75" onchange="saveSettings()" />
+            </div>
+          </div>
+          <div class="quick-strip">
+            <div class="quick-chips-scroll">
+              <button class="chip" onclick="copyAppleNote()">Für Apple Notizen kopieren</button>
+              <button class="chip" onclick="exportBackup()">Backup speichern (.json)</button>
+              <button class="chip" onclick="document.getElementById('importFile').click()">Backup laden</button>
+              <input type="file" id="importFile" accept=".json" style="display:none" onchange="importBackup(event)" />
+              <button class="chip" onclick="resetToDefaultData()" style="color: var(--red);">Zurücksetzen</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Apple Wallet / Health Summary Bento (Fits cleanly on iPhone screen!) -->
+    <section class="summary-bento">
+      <!-- Featured Wallet Card: Überstunden-Konto -->
+      <div class="wallet-hero">
+        <div class="wallet-hero-top">
+          <div>
+            <div class="wallet-eyebrow">Überstunden-Konto</div>
+            <div class="wallet-balance" id="kpiOvertimeEuro">415,05 €</div>
+          </div>
+          <span class="badge yellow" id="kpiOvertimeHours">29,86 Std.</span>
+        </div>
+        <div class="wallet-hero-footer">
+          <span>Aus abgerechneten Monaten</span>
+          <span id="kpiOvertimeWithOpen" style="font-weight: 500; color: var(--text);"></span>
+        </div>
+      </div>
+
+      <!-- Compact Left Tile: Selected Month -->
+      <div class="metric-card">
+        <div class="metric-header">
+          <span class="metric-title" id="kpiMonthTitle">November</span>
+          <span class="badge green" id="kpiMonthHours">6,5 Std.</span>
+        </div>
+        <div class="metric-value" id="kpiMonthEuro">90,35 €</div>
+        <div class="ios-progress">
+          <div class="ios-progress-fill" id="kpiMonthProgress" style="width: 15%;"></div>
+        </div>
+        <div class="metric-sub" id="kpiMonthRemaining">Noch 35,6 Std. bis Limit</div>
+      </div>
+
+      <!-- Compact Right Tile: Total Across All Months -->
+      <div class="metric-card">
+        <div class="metric-header">
+          <span class="metric-title">Gesamt</span>
+          <span class="badge orange" id="kpiTotalHoursAll">102 Std.</span>
+        </div>
+        <div class="metric-value" id="kpiTotalEuroAll">1.417,80 €</div>
+        <div class="metric-sub" id="kpiTotalPaidAll">Ausgezahlt: 912,40 €</div>
+      </div>
+    </section>
+
+    <!-- Swipeable Month Selector Strip -->
+    <div class="month-strip-wrap">
+      <div class="month-tabs" id="monthTabs"></div>
+      <button class="btn-add-month" onclick="promptNewMonth()">+ Monat</button>
+    </div>
+
+    <!-- Section: Shift & Hours Entry -->
+    <section class="ios-section">
+      <div class="ios-section-header">
+        <span class="ios-section-title">Stunden erfassen</span>
+        <span class="ios-section-meta" id="activeMonthHint">November 2026</span>
+      </div>
+      <div class="ios-card">
+        <!-- iOS Segmented Control -->
+        <div class="segmented-control">
+          <button class="seg-btn active" id="modeDirectBtn" onclick="setEntryMode('direct')">Stunden direkt</button>
+          <button class="seg-btn" id="modeTimeBtn" onclick="setEntryMode('time')">Start- & Endzeit</button>
+        </div>
+
+        <!-- Mode 1: Direct Hours -->
+        <div id="formDirect" class="ios-form-stack">
+          <div class="field">
+            <label>Bezeichnung</label>
+            <input type="text" id="entryLabel" placeholder="z. B. KW 47 oder Spätschicht" />
+          </div>
+          <div class="ios-form-row-2">
+            <div class="field">
+              <label>Datum</label>
+              <input type="date" id="entryDate" />
+            </div>
+            <div class="field">
+              <label>Stunden</label>
+              <input type="text" inputmode="decimal" id="entryHours" placeholder="z. B. 6,5" onkeydown="if(event.key==='Enter') addDirectEntry()" />
+            </div>
+          </div>
+          <button class="btn-ios-primary" onclick="addDirectEntry()">Hinzufügen</button>
+        </div>
+
+        <!-- Mode 2: Start & End Time Calculator -->
+        <div id="formTime" class="ios-form-stack" style="display: none;">
+          <div class="ios-form-row-2">
+            <div class="field">
+              <label>Schicht</label>
+              <input type="text" id="timeLabel" placeholder="z. B. Spätschicht" />
+            </div>
+            <div class="field">
+              <label>Pause (Min.)</label>
+              <input type="number" id="timeBreak" value="0" min="0" step="5" onchange="previewTimeCalc()" />
+            </div>
+          </div>
+          <div class="ios-form-row-equal">
+            <div class="field">
+              <label>Beginn</label>
+              <input type="time" id="timeStart" value="14:00" onchange="previewTimeCalc()" />
+            </div>
+            <div class="field">
+              <label>Ende</label>
+              <input type="time" id="timeEnd" value="20:30" onchange="previewTimeCalc()" />
+            </div>
+          </div>
+          <button class="btn-ios-primary" onclick="addTimeEntry()" id="btnAddTime">+ 6,5 Std. hinzufügen</button>
+        </div>
+
+        <!-- Quick 1-Tap Chips -->
+        <div class="quick-strip">
+          <span class="quick-strip-label">Schnellwahl für <strong id="quickMonthName" style="color: var(--text); font-weight: 600;">November</strong>:</span>
+          <div class="quick-chips-scroll">
+            <button class="chip" onclick="quickAddHours(4)">+ 4 Std.</button>
+            <button class="chip" onclick="quickAddHours(5)">+ 5 Std.</button>
+            <button class="chip" onclick="quickAddHours(6)">+ 6 Std.</button>
+            <button class="chip" onclick="quickAddHours(6.5)">+ 6,5 Std.</button>
+            <button class="chip" onclick="quickAddHours(8)">+ 8 Std.</button>
+            <button class="chip" onclick="quickAddHours(10)">+ 10 Std.</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section: Entries in Selected Month (iOS Inset Grouped List) -->
+    <section class="ios-section">
+      <div class="ios-section-header">
+        <span class="ios-section-title" id="entriesSectionTitle">Einträge im November</span>
+        <span class="ios-section-meta" id="entriesSectionSub">4 Schichten</span>
+      </div>
+      <div class="ios-card inset-list" id="entriesList"></div>
+    </section>
+
+    <!-- Section: Monthly Settlement & Overtime -->
+    <section class="ios-section">
+      <div class="ios-section-header">
+        <span class="ios-section-title" id="payoutBoxTitle">Abrechnung · November</span>
+        <span id="monthOvertimeBadge" class="badge orange">Laufend</span>
+      </div>
+      <div class="ios-card">
+        <div class="receipt-box">
+          <div class="receipt-line">
+            <span>Erwirtschaftet</span>
+            <strong id="summaryEarned">90,35 € (6,5 Std.)</strong>
+          </div>
+          <div class="receipt-line">
+            <span>Monatliches Limit</span>
+            <strong id="summaryLimit">585,75 €</strong>
+          </div>
+          <div class="receipt-line divider">
+            <span>In Überstunden</span>
+            <strong id="summaryDelta">Laufend</strong>
+          </div>
+        </div>
+
+        <div class="ios-form-row-equal">
+          <div class="field">
+            <label>Status</label>
+            <select id="monthStatusSelect" onchange="updateMonthSettlement()">
+              <option value="open">Laufender Monat</option>
+              <option value="settled">Abgerechnet</option>
+            </select>
+          </div>
+          <div class="field" id="paidInputWrap">
+            <label>Ausgezahlt (€)</label>
+            <input type="text" inputmode="decimal" id="monthPaidInput" placeholder="585,75" onchange="updateMonthSettlement()" />
+          </div>
+        </div>
+
+        <div class="quick-strip">
+          <div class="quick-chips-scroll">
+            <button class="chip" onclick="setPresetPayout('cap')">Limit (585,75 €)</button>
+            <button class="chip" onclick="setPresetPayout('full')">100 % ausgezahlt</button>
+            <button class="chip" onclick="setPresetPayout('zero')">0 € (Alles in Überstunden)</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section: All Months Overview (iOS Inset Grouped List instead of cramped table) -->
+    <section class="ios-section">
+      <div class="ios-section-header">
+        <span class="ios-section-title">Alle Monate</span>
+        <span class="ios-section-meta">Tippen zum Wechseln</span>
+      </div>
+      <div class="ios-card inset-list" id="monthsListBody"></div>
+    </section>
+
+  </main>
+
+  <div class="toast" id="toast">Gespeichert</div>
+
+  <script>
+    const STORAGE_KEY = "edeka_stunden_tracker_v1";
+    const THEME_KEY = "edeka_theme_v1";
+    const CLOUD_BIN_URL = "https://extendsclass.com/api/json-storage/bin/cfafecd";
+    const NTFY_TOPIC = "edeka_sync_smotz_9f8a7b6c5d";
+
+    const THEME_META_COLORS = {
+      "dark": "#000000",
+      "light": "#f2f2f7",
+      "pastel-blue": "#a7bed4",
+      "pastel-pink": "#cba7b7",
+      "pastel-green": "#a3c1b0",
+      "pastel-lavender": "#b1a8cf",
+      "pastel-peach": "#cfaea0",
+      "pastel-yellow": "#c9bc93"
+    };
+
+    function initTheme() {
+      const saved = (state && state.theme) || localStorage.getItem(THEME_KEY) || "pastel-blue";
+      applyTheme(saved);
+    }
+
+    function applyTheme(theme) {
+      document.documentElement.setAttribute("data-theme", theme);
+      const meta = document.getElementById("metaThemeColor");
+      if (meta) meta.setAttribute("content", THEME_META_COLORS[theme] || "#a7bed4");
+
+      document.querySelectorAll(".theme-swatch-btn").forEach(btn => {
+        btn.classList.toggle("active", btn.getAttribute("data-theme-id") === theme);
+      });
+    }
+
+    function setTheme(theme) {
+      localStorage.setItem(THEME_KEY, theme);
+      state.theme = theme;
+      applyTheme(theme);
+      saveState();
+      showToast("Design aktualisiert");
+    }
+
+    function setSettingsTab(tab) {
+      document.getElementById("tabDesignBtn").classList.toggle("active", tab === "design");
+      document.getElementById("tabDataBtn").classList.toggle("active", tab === "data");
+      document.getElementById("settingsTabDesign").style.display = tab === "design" ? "block" : "none";
+      document.getElementById("settingsTabData").style.display = tab === "data" ? "block" : "none";
+    }
+
+    function toggleTheme() {
+      const panel = document.getElementById("settingsPanel");
+      panel.style.display = "flex";
+      setSettingsTab("design");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function getInitialState() {
+      return {
+        updatedAt: 1,
+        hourlyWage: 13.90,
+        payoutCap: 585.75,
+        selectedMonthId: "2026-11",
+        months: [
+          {
+            id: "2026-08",
+            name: "August",
+            year: 2026,
+            status: "settled",
+            paidAmount: 0.00,
+            showPaidInNote: false,
+            entries: [
+              { id: "aug-1", label: "Monatsstunden August", date: "2026-08-31", hours: 10.0 }
+            ]
+          },
+          {
+            id: "2026-09",
+            name: "September",
+            year: 2026,
+            status: "settled",
+            paidAmount: 585.75,
+            showPaidInNote: true,
+            entries: [
+              { id: "sep-1", label: "Monatsstunden September", date: "2026-09-30", hours: 62.0 }
+            ]
+          },
+          {
+            id: "2026-10",
+            name: "Oktober",
+            year: 2026,
+            status: "settled",
+            paidAmount: 578.94,
+            showPaidInNote: true,
+            entries: [
+              { id: "oct-1", label: "Monatsstunden Oktober", date: "2026-10-31", hours: 23.5 }
+            ]
+          },
+          {
+            id: "2026-11",
+            name: "November",
+            year: 2026,
+            status: "open",
+            paidAmount: 0.00,
+            showPaidInNote: false,
+            entries: [
+              { id: "nov-1", label: "Woche 1 (KW 45)", date: "2026-11-03", hours: 6.5 },
+              { id: "e-1794663590030", label: "Schicht 09:00–18:00 Uhr (60m Pause)", date: "2026-11-14", hours: 8.0 },
+              { id: "e-1794737929885", label: "Schicht 07:00–15:00 Uhr (30m Pause)", date: "2026-11-15", hours: 7.5 },
+              { id: "e-1794834661776", label: "Schicht 15:00–20:00 Uhr", date: "2026-11-16", hours: 5.0 }
+            ]
+          }
+        ]
+      };
+    }
+
+    let state = loadState();
+
+    function loadState() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (raw) {
+          const parsed = JSON.parse(raw);
+          if (parsed && Array.isArray(parsed.months) && parsed.months.length > 0) {
+            if (!parsed.updatedAt) parsed.updatedAt = 2;
+            return parsed;
+          }
+        }
+      } catch (e) {
+        console.error(e);
+      }
+      return getInitialState();
+    }
+
+    function setSyncStatus(status, label) {
+      const dot = document.getElementById("syncDot");
+      const txt = document.getElementById("syncText");
+      if (!dot || !txt) return;
+      dot.className = "sync-dot" + (status === "syncing" ? " syncing" : status === "offline" ? " offline" : "");
+      txt.textContent = label || (status === "syncing" ? "Sync…" : status === "offline" ? "Offline" : "Sync");
+    }
+
+    async function pushToCloud() {
+      setSyncStatus("syncing", "Sync…");
+      const payload = JSON.stringify(state);
+      let ok = false;
+
+      try {
+        const r1 = await fetch(`https://ntfy.sh/${NTFY_TOPIC}`, {
+          method: "POST",
+          body: payload
+        });
+        if (r1.ok) ok = true;
+      } catch (e) {}
+
+      try {
+        const r2 = await fetch(CLOUD_BIN_URL, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: payload
+        });
+        if (r2.ok) ok = true;
+      } catch (e) {}
+
+      if (ok) {
+        setSyncStatus("ok", "Sync");
+      } else {
+        setSyncStatus("offline", "Offline");
+      }
+    }
+
+    function applyIncomingState(remote, manual = false) {
+      if (!remote || !Array.isArray(remote.months)) return false;
+      const remoteTime = Number(remote.updatedAt) || 0;
+      const localTime = Number(state.updatedAt) || 0;
+      if (remoteTime > localTime) {
+        const currentTab = state.selectedMonthId;
+        state = remote;
+        if (state.months.some(m => m.id === currentTab)) {
+          state.selectedMonthId = currentTab;
+        }
+        if (state.theme) {
+          localStorage.setItem(THEME_KEY, state.theme);
+          applyTheme(state.theme);
+        }
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+        renderAll();
+        if (manual) showToast("Synchronisiert");
+        return true;
+      }
+      return false;
+    }
+
+    async function pullFromCloud(manual = false) {
+      if (manual) setSyncStatus("syncing", "Lädt…");
+      let bestRemote = null;
+
+      try {
+        const res = await fetch(CLOUD_BIN_URL + "?t=" + Date.now(), { cache: "no-store" });
+        if (res.ok) {
+          const rawText = await res.text();
+          const cleanJson = rawText.split(/<!doctype/i)[0].trim();
+          const data = JSON.parse(cleanJson);
+          if (data && Array.isArray(data.months)) {
+            bestRemote = data;
+          }
+        }
+      } catch (e) {}
+
+      try {
+        const res2 = await fetch(`https://ntfy.sh/${NTFY_TOPIC}/json?poll=1&since=24h&t=${Date.now()}`, { cache: "no-store" });
+        if (res2.ok) {
+          const text = await res2.text();
+          const lines = text.trim().split("\n").filter(Boolean);
+          for (const line of lines) {
+            try {
+              const evt = JSON.parse(line);
+              if (evt && evt.message) {
+                const parsed = JSON.parse(evt.message);
+                if (parsed && Array.isArray(parsed.months)) {
+                  if (!bestRemote || (Number(parsed.updatedAt) || 0) > (Number(bestRemote.updatedAt) || 0)) {
+                    bestRemote = parsed;
+                  }
+                }
+              }
+            } catch (err) {}
+          }
+        }
+      } catch (e) {}
+
+      if (bestRemote) {
+        const remoteTime = Number(bestRemote.updatedAt) || 0;
+        const localTime = Number(state.updatedAt) || 0;
+        if (remoteTime > localTime) {
+          applyIncomingState(bestRemote, manual);
+        } else if (localTime > remoteTime) {
+          await pushToCloud();
+          if (manual) showToast("Stand an Cloud gesendet");
+        } else if (manual) {
+          showToast("Bereits synchron");
+        }
+        setSyncStatus("ok", "Sync");
+      } else {
+        await pushToCloud();
+      }
+    }
+
+    function startLiveSyncListener() {
+      try {
+        const es = new EventSource(`https://ntfy.sh/${NTFY_TOPIC}/sse`);
+        es.onmessage = (event) => {
+          try {
+            const data = JSON.parse(event.data);
+            if (data && data.message) {
+              const incoming = JSON.parse(data.message);
+              if (applyIncomingState(incoming, false)) {
+                setSyncStatus("ok", "Sync");
+                showToast("Live-Update empfangen");
+              }
+            }
+          } catch (err) {}
+        };
+      } catch (e) {}
+
+      setInterval(() => {
+        if (document.visibilityState === "visible") {
+          pullFromCloud(false);
+        }
+      }, 4000);
+
+      window.addEventListener("focus", () => pullFromCloud(false));
+      document.addEventListener("visibilitychange", () => {
+        if (document.visibilityState === "visible") pullFromCloud(false);
+      });
+    }
+
+    function saveState() {
+      state.updatedAt = Date.now();
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      renderAll();
+      pushToCloud();
+    }
+
+    function exportBackup() {
+      const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(state, null, 2));
+      const a = document.createElement("a");
+      a.setAttribute("href", dataStr);
+      a.setAttribute("download", `edeka-stunden-backup-${new Date().toISOString().slice(0, 10)}.json`);
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      showToast("Backup heruntergeladen");
+    }
+
+    function importBackup(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        try {
+          const imported = JSON.parse(e.target.result);
+          if (imported && Array.isArray(imported.months)) {
+            state = imported;
+            saveState();
+            showToast("Backup erfolgreich geladen");
+          } else {
+            showToast("Ungültige Backup-Datei");
+          }
+        } catch (err) {
+          showToast("Fehler beim Lesen der Datei");
+        }
+      };
+      reader.readAsText(file);
+    }
+
+    function resetToDefaultData() {
+      if (confirm("Alle Daten auf den Ausgangsstand (August–November, Überstunden: 415,05 €) zurücksetzen?")) {
+        state = getInitialState();
+        saveState();
+        showToast("Daten zurückgesetzt");
+      }
+    }
+
+    function fmtEur(num) {
+      return num.toLocaleString("de-DE", { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + " €";
+    }
+
+    function fmtNoteNum(num) {
+      const rounded = Math.round(num * 100) / 100;
+      return rounded.toLocaleString("de-DE", { minimumFractionDigits: 0, maximumFractionDigits: 2 });
+    }
+
+    function fmtHours(num) {
+      const rounded = Math.round(num * 100) / 100;
+      return rounded.toLocaleString("de-DE", { minimumFractionDigits: 0, maximumFractionDigits: 2 });
+    }
+
+    function parseGermanFloat(val) {
+      if (typeof val === "number") return val;
+      if (!val) return 0;
+      const cleaned = String(val).replace(",", ".").replace(/[^0-9.-]/g, "");
+      const num = parseFloat(cleaned);
+      return isNaN(num) ? 0 : num;
+    }
+
+    function formatEntryDateParts(dateStr) {
+      if (!dateStr) return { day: "—", wk: "TAG", full: "" };
+      const d = new Date(dateStr + "T12:00:00");
+      if (isNaN(d.getTime())) return { day: "—", wk: "TAG", full: dateStr };
+      const weekdays = ["SO", "MO", "DI", "MI", "DO", "FR", "SA"];
+      const day = String(d.getDate()).padStart(2, "0");
+      const wk = weekdays[d.getDay()];
+      const full = d.toLocaleDateString("de-DE", { day: "2-digit", month: "2-digit", year: "numeric" });
+      return { day, wk, full };
+    }
+
+    function getMonthHours(m) {
+      return m.entries.reduce((sum, e) => sum + (Number(e.hours) || 0), 0);
+    }
+
+    function getMonthEarnings(m) {
+      return Math.round(getMonthHours(m) * state.hourlyWage * 100) / 100;
+    }
+
+    function getMonthOvertimeEuro(m) {
+      const earned = getMonthEarnings(m);
+      if (m.status !== "settled") return 0;
+      const paid = Number(m.paidAmount) || 0;
+      return Math.round((earned - paid) * 100) / 100;
+    }
+
+    function getSelectedMonth() {
+      return state.months.find(m => m.id === state.selectedMonthId) || state.months[state.months.length - 1];
+    }
+
+    function selectMonth(id) {
+      state.selectedMonthId = id;
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      renderAll();
+    }
+
+    function setEntryMode(mode) {
+      document.getElementById("modeDirectBtn").classList.toggle("active", mode === "direct");
+      document.getElementById("modeTimeBtn").classList.toggle("active", mode === "time");
+      document.getElementById("formDirect").style.display = mode === "direct" ? "flex" : "none";
+      document.getElementById("formTime").style.display = mode === "time" ? "flex" : "none";
+      if (mode === "time") previewTimeCalc();
+    }
+
+    function calcTimeHours() {
+      const st = document.getElementById("timeStart").value;
+      const en = document.getElementById("timeEnd").value;
+      const brk = parseGermanFloat(document.getElementById("timeBreak").value);
+      if (!st || !en) return 0;
+      const [sh, sm] = st.split(":").map(Number);
+      const [eh, em] = en.split(":").map(Number);
+      let diffMin = (eh * 60 + em) - (sh * 60 + sm);
+      if (diffMin < 0) diffMin += 24 * 60;
+      diffMin = Math.max(0, diffMin - brk);
+      return Math.round((diffMin / 60) * 100) / 100;
+    }
+
+    function previewTimeCalc() {
+      const hrs = calcTimeHours();
+      document.getElementById("btnAddTime").textContent = `+ ${fmtHours(hrs)} Std. hinzufügen (${fmtEur(hrs * state.hourlyWage)})`;
+    }
+
+    function addDirectEntry() {
+      const m = getSelectedMonth();
+      const hrsInput = document.getElementById("entryHours");
+      const labelInput = document.getElementById("entryLabel");
+      const dateInput = document.getElementById("entryDate");
+
+      const hrs = parseGermanFloat(hrsInput.value);
+      if (hrs <= 0) {
+        showToast("Bitte gültige Stunden eingeben");
+        hrsInput.focus();
+        return;
+      }
+
+      const weekNum = m.entries.length + 1;
+      const label = labelInput.value.trim() || `Woche ${weekNum}`;
+      const date = dateInput.value || new Date().toISOString().slice(0, 10);
+
+      m.entries.push({
+        id: "e-" + Date.now(),
+        label,
+        date,
+        hours: hrs
+      });
+
+      hrsInput.value = "";
+      labelInput.value = "";
+      saveState();
+      showToast(`+${fmtHours(hrs)} Std. hinzugefügt`);
+    }
+
+    function addTimeEntry() {
+      const m = getSelectedMonth();
+      const hrs = calcTimeHours();
+      if (hrs <= 0) {
+        showToast("Bitte gültige Start- und Endzeit wählen");
+        return;
+      }
+      const st = document.getElementById("timeStart").value;
+      const en = document.getElementById("timeEnd").value;
+      const brk = parseGermanFloat(document.getElementById("timeBreak").value);
+      const customLabel = document.getElementById("timeLabel").value.trim();
+      const timeInfo = `${st}–${en} Uhr` + (brk > 0 ? ` (${brk}m Pause)` : "");
+      const label = customLabel ? `${customLabel} (${timeInfo})` : `Schicht ${timeInfo}`;
+
+      m.entries.push({
+        id: "e-" + Date.now(),
+        label,
+        date: new Date().toISOString().slice(0, 10),
+        hours: hrs
+      });
+
+      document.getElementById("timeLabel").value = "";
+      saveState();
+      showToast(`+${fmtHours(hrs)} Std. hinzugefügt`);
+    }
+
+    function quickAddHours(hrs) {
+      const m = getSelectedMonth();
+      const weekNum = m.entries.length + 1;
+      m.entries.push({
+        id: "e-" + Date.now(),
+        label: `Woche ${weekNum} / Schicht`,
+        date: new Date().toISOString().slice(0, 10),
+        hours: hrs
+      });
+      saveState();
+      showToast(`+${fmtHours(hrs)} Std. (${fmtEur(hrs * state.hourlyWage)})`);
+    }
+
+    function editEntry(entryId) {
+      const m = getSelectedMonth();
+      const entry = m.entries.find(e => e.id === entryId);
+      if (!entry) return;
+      const newLabel = prompt("Bezeichnung bearbeiten:", entry.label);
+      if (newLabel === null) return;
+      const newHoursStr = prompt("Stunden bearbeiten:", fmtHours(entry.hours));
+      if (newHoursStr === null) return;
+      const parsedHrs = parseGermanFloat(newHoursStr);
+      if (parsedHrs <= 0) {
+        showToast("Ungültige Stundenzahl");
+        return;
+      }
+      entry.label = newLabel.trim() || entry.label;
+      entry.hours = parsedHrs;
+      saveState();
+      showToast("Eintrag aktualisiert");
+    }
+
+    function deleteEntry(entryId) {
+      const m = getSelectedMonth();
+      m.entries = m.entries.filter(e => e.id !== entryId);
+      saveState();
+      showToast("Eintrag entfernt");
+    }
+
+    function updateMonthSettlement() {
+      const m = getSelectedMonth();
+      const statusSel = document.getElementById("monthStatusSelect").value;
+      const paidVal = parseGermanFloat(document.getElementById("monthPaidInput").value);
+      m.status = statusSel;
+      m.paidAmount = paidVal;
+      m.showPaidInNote = (statusSel === "settled" && paidVal > 0 && Math.abs(paidVal - getMonthEarnings(m)) > 0.01);
+      saveState();
+    }
+
+    function setPresetPayout(type) {
+      const m = getSelectedMonth();
+      const earned = getMonthEarnings(m);
+      m.status = "settled";
+      if (type === "cap") {
+        m.paidAmount = state.payoutCap;
+        m.showPaidInNote = true;
+      } else if (type === "full") {
+        m.paidAmount = earned;
+        m.showPaidInNote = false;
+      } else if (type === "zero") {
+        m.paidAmount = 0;
+        m.showPaidInNote = false;
+      }
+      saveState();
+      showToast(`Abrechnung für ${m.name} gespeichert`);
+    }
+
+    function promptNewMonth() {
+      const name = prompt("Name des neuen Monats (z. B. Dezember):", "Dezember");
+      if (!name) return;
+      const id = "m-" + Date.now();
+      state.months.push({
+        id,
+        name: name.trim(),
+        year: 2026,
+        status: "open",
+        paidAmount: 0,
+        showPaidInNote: false,
+        entries: []
+      });
+      state.selectedMonthId = id;
+      saveState();
+      showToast(`${name} hinzugefügt`);
+    }
+
+    function toggleSettings() {
+      const panel = document.getElementById("settingsPanel");
+      panel.style.display = panel.style.display === "none" ? "flex" : "none";
+    }
+
+    function saveSettings() {
+      const w = parseGermanFloat(document.getElementById("inputHourlyWage").value);
+      const c = parseGermanFloat(document.getElementById("inputPayoutCap").value);
+      if (w > 0) state.hourlyWage = w;
+      if (c > 0) state.payoutCap = c;
+      saveState();
+      showToast("Einstellungen gespeichert");
+    }
+
+    function buildAppleNoteText() {
+      let totalOvertimeEuro = 0;
+      state.months.forEach(m => {
+        totalOvertimeEuro += getMonthOvertimeEuro(m);
+      });
+
+      const lines = [];
+      lines.push("edeka");
+      lines.push("");
+      lines.push(`Überstunden: ${fmtNoteNum(totalOvertimeEuro)}`);
+      lines.push("");
+
+      state.months.forEach(m => {
+        const hrs = getMonthHours(m);
+        const eur = getMonthEarnings(m);
+        let line = `${m.name}: ${fmtHours(hrs)} ${fmtNoteNum(eur)}€`;
+        if (m.showPaidInNote && m.paidAmount > 0) {
+          line += `    Ausgezahlt ${fmtNoteNum(m.paidAmount)}`;
+        }
+        lines.push(line);
+      });
+
+      return lines.join("\n");
+    }
+
+    function copyAppleNote() {
+      const txt = buildAppleNoteText();
+      navigator.clipboard.writeText(txt).then(() => {
+        showToast("Für Apple Notizen kopiert");
+      });
+    }
+
+    function showToast(msg) {
+      const t = document.getElementById("toast");
+      t.textContent = msg;
+      t.classList.add("show");
+      clearTimeout(window._toastTimer);
+      window._toastTimer = setTimeout(() => t.classList.remove("show"), 2400);
+    }
+
+    function renderAll() {
+      const sel = getSelectedMonth();
+
+      document.getElementById("headerWageText").textContent =
+        `${fmtNoteNum(state.hourlyWage)} € / Std. · Limit ${fmtNoteNum(state.payoutCap)} €`;
+      document.getElementById("inputHourlyWage").value = state.hourlyWage;
+      document.getElementById("inputPayoutCap").value = state.payoutCap;
+
+      let settledOvertimeEuro = 0;
+      let totalHoursAll = 0;
+      let totalEuroAll = 0;
+      let totalPaidAll = 0;
+
+      state.months.forEach(m => {
+        const h = getMonthHours(m);
+        const e = getMonthEarnings(m);
+        totalHoursAll += h;
+        totalEuroAll += e;
+        if (m.status === "settled") {
+          settledOvertimeEuro += getMonthOvertimeEuro(m);
+          totalPaidAll += Number(m.paidAmount) || 0;
+        }
+      });
+
+      const settledOvertimeHours = state.hourlyWage > 0 ? settledOvertimeEuro / state.hourlyWage : 0;
+
+      document.getElementById("kpiOvertimeEuro").textContent = fmtEur(settledOvertimeEuro);
+      document.getElementById("kpiOvertimeHours").textContent = `${fmtHours(settledOvertimeHours)} Std.`;
+
+      const selHours = getMonthHours(sel);
+      const selEuro = getMonthEarnings(sel);
+      const pct = Math.min(100, Math.round((selEuro / state.payoutCap) * 100));
+
+      document.getElementById("kpiMonthTitle").textContent = sel.name;
+      document.getElementById("activeMonthHint").textContent = `${sel.name} ${sel.year}`;
+      document.getElementById("kpiMonthHours").textContent = `${fmtHours(selHours)} Std.`;
+      document.getElementById("kpiMonthEuro").textContent = fmtEur(selEuro);
+
+      const progEl = document.getElementById("kpiMonthProgress");
+      progEl.style.width = `${pct}%`;
+      progEl.classList.toggle("over", selEuro > state.payoutCap);
+
+      if (selEuro <= state.payoutCap) {
+        const remEur = Math.max(0, state.payoutCap - selEuro);
+        const remHrs = remEur / state.hourlyWage;
+        document.getElementById("kpiMonthRemaining").textContent =
+          `Noch ${fmtHours(remHrs)} Std. (${fmtNoteNum(remEur)} €) frei`;
+      } else {
+        const overEur = selEuro - state.payoutCap;
+        const overHrs = overEur / state.hourlyWage;
+        document.getElementById("kpiMonthRemaining").innerHTML =
+          `<span style="color: var(--yellow); font-weight: 600;">+${fmtEur(overEur)} (+${fmtHours(overHrs)} Std.) über Limit</span>`;
+      }
+
+      document.getElementById("kpiTotalHoursAll").textContent = `${fmtHours(totalHoursAll)} Std.`;
+      document.getElementById("kpiTotalEuroAll").textContent = fmtEur(totalEuroAll);
+      document.getElementById("kpiTotalPaidAll").textContent = `Ausgezahlt: ${fmtEur(totalPaidAll)}`;
+
+      // Render Month Tabs
+      const tabsEl = document.getElementById("monthTabs");
+      tabsEl.innerHTML = "";
+      state.months.forEach(m => {
+        const btn = document.createElement("button");
+        btn.className = "month-tab" + (m.id === sel.id ? " active" : "");
+        btn.onclick = () => selectMonth(m.id);
+        const h = getMonthHours(m);
+        const e = getMonthEarnings(m);
+        const dotClass = m.status === "settled" ? "status-dot settled" : "status-dot";
+        btn.innerHTML = `
+          <div class="month-tab-top">
+            <span>${m.name}</span>
+            <span class="${dotClass}"></span>
+          </div>
+          <span class="sub">${fmtHours(h)} Std. · ${fmtNoteNum(e)} €</span>
+        `;
+        tabsEl.appendChild(btn);
+      });
+
+      document.getElementById("quickMonthName").textContent = sel.name;
+      document.getElementById("payoutBoxTitle").textContent = `Abrechnung · ${sel.name}`;
+      document.getElementById("entriesSectionTitle").textContent = `Einträge im ${sel.name}`;
+      document.getElementById("entriesSectionSub").textContent =
+        sel.entries.length === 1
+          ? `1 Schicht · ${fmtHours(selHours)} Std.`
+          : `${sel.entries.length} Schichten · ${fmtHours(selHours)} Std.`;
+
+      document.getElementById("summaryEarned").textContent = `${fmtEur(selEuro)} (${fmtHours(selHours)} Std.)`;
+      document.getElementById("summaryLimit").textContent = fmtEur(state.payoutCap);
+
+      // Render Entries as iOS Inset Grouped List
+      const listEl = document.getElementById("entriesList");
+      listEl.innerHTML = "";
+      if (sel.entries.length === 0) {
+        listEl.innerHTML = `<div class="empty-list">Keine Einträge im ${sel.name}</div>`;
+      } else {
+        sel.entries.forEach(entry => {
+          const row = document.createElement("div");
+          row.className = "ios-list-row";
+          const eEur = entry.hours * state.hourlyWage;
+          const dParts = formatEntryDateParts(entry.date);
+          row.innerHTML = `
+            <div class="row-left">
+              <div class="ios-cal-icon">
+                <span class="wk">${dParts.wk}</span>
+                <span class="day">${dParts.day}</span>
+              </div>
+              <div class="row-text">
+                <div class="row-title">${entry.label}</div>
+                <div class="row-subtitle">${dParts.full || "Kein Datum"}</div>
+              </div>
+            </div>
+            <div class="row-right">
+              <div class="row-value-group">
+                <div class="row-value-primary">${fmtHours(entry.hours)} Std.</div>
+                <div class="row-value-secondary">${fmtEur(eEur)}</div>
+              </div>
+              <div class="row-actions">
+                <button class="ios-row-btn" title="Bearbeiten" onclick="editEntry('${entry.id}')">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
+                </button>
+                <button class="ios-row-btn delete" title="Löschen" onclick="deleteEntry('${entry.id}')">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                </button>
+              </div>
+            </div>
+          `;
+          listEl.appendChild(row);
+        });
+      }
+
+      document.getElementById("monthStatusSelect").value = sel.status;
+      document.getElementById("monthPaidInput").value = fmtNoteNum(sel.paidAmount || 0);
+      document.getElementById("paidInputWrap").style.opacity = sel.status === "settled" ? "1" : "0.45";
+
+      const mOver = getMonthOvertimeEuro(sel);
+      const mOverHrs = state.hourlyWage > 0 ? mOver / state.hourlyWage : 0;
+      const badgeEl = document.getElementById("monthOvertimeBadge");
+      const deltaEl = document.getElementById("summaryDelta");
+
+      if (sel.status !== "settled") {
+        badgeEl.className = "badge orange";
+        badgeEl.textContent = "Laufend";
+        deltaEl.textContent = "Offen (Laufender Monat)";
+        deltaEl.style.color = "var(--orange)";
+      } else if (mOver > 0) {
+        badgeEl.className = "badge yellow";
+        badgeEl.textContent = `+${fmtEur(mOver)} (+${fmtHours(mOverHrs)} Std.)`;
+        deltaEl.textContent = `+${fmtEur(mOver)} (+${fmtHours(mOverHrs)} Std.)`;
+        deltaEl.style.color = "var(--yellow)";
+      } else if (mOver < 0) {
+        badgeEl.className = "badge orange";
+        badgeEl.textContent = `${fmtEur(mOver)} (${fmtHours(mOverHrs)} Std.)`;
+        deltaEl.textContent = `${fmtEur(mOver)} (${fmtHours(mOverHrs)} Std.)`;
+        deltaEl.style.color = "var(--orange)";
+      } else {
+        badgeEl.className = "badge green";
+        badgeEl.textContent = "±0,00 €";
+        deltaEl.textContent = "±0,00 €";
+        deltaEl.style.color = "var(--green)";
+      }
+
+      // Render All Months as iOS Grouped List (Clean on Mobile & Desktop)
+      const mList = document.getElementById("monthsListBody");
+      mList.innerHTML = "";
+      state.months.forEach(m => {
+        const row = document.createElement("div");
+        row.className = "ios-list-row no-icon clickable" + (m.id === sel.id ? " selected-month" : "");
+        row.onclick = () => selectMonth(m.id);
+        const h = getMonthHours(m);
+        const e = getMonthEarnings(m);
+        const ov = getMonthOvertimeEuro(m);
+        const ovHrs = state.hourlyWage > 0 ? ov / state.hourlyWage : 0;
+
+        let subInfo = m.status === "settled"
+          ? `Ausgezahlt: ${fmtEur(m.paidAmount || 0)}`
+          : `Laufender Monat`;
+
+        let badgeHtml = `<span class="badge orange">Laufend</span>`;
+        if (m.status === "settled") {
+          if (ov > 0) {
+            badgeHtml = `<span class="badge yellow">+${fmtEur(ov)} (+${fmtHours(ovHrs)}h)</span>`;
+          } else if (ov < 0) {
+            badgeHtml = `<span class="badge orange">${fmtEur(ov)} (${fmtHours(ovHrs)}h)</span>`;
+          } else {
+            badgeHtml = `<span class="badge green">±0,00 €</span>`;
+          }
+        }
+
+        row.innerHTML = `
+          <div class="row-left">
+            <div class="row-text">
+              <div class="row-title" style="font-weight: 600;">${m.name} ${m.year}</div>
+              <div class="row-subtitle">${fmtHours(h)} Std. · ${subInfo}</div>
+            </div>
+          </div>
+          <div class="row-right">
+            <div class="row-value-group">
+              <div class="row-value-primary">${fmtEur(e)}</div>
+              <div style="margin-top: 3px;">${badgeHtml}</div>
+            </div>
+          </div>
+        `;
+        mList.appendChild(row);
+      });
+    }
+
+    initTheme();
+    document.getElementById("entryDate").value = new Date().toISOString().slice(0, 10);
+    renderAll();
+    pullFromCloud(false);
+    startLiveSyncListener();
+
+    if ("serviceWorker" in navigator) {
+      window.addEventListener("load", () => {
+        navigator.serviceWorker.register("./sw.js").catch(err => {
+          console.warn("ServiceWorker registration failed:", err);
+        });
+      });
+    }
+  </script>
+</body>
+</html>
